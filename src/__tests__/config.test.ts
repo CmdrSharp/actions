@@ -31,6 +31,7 @@ describe('config.ts', () => {
     expect(c).toBeTruthy();
     expect(c).toMatchInlineSnapshot(`
       Object {
+        "args": undefined,
         "cloudUrl": "file://~",
         "command": "up",
         "commentOnPr": false,
@@ -95,6 +96,7 @@ describe('config.ts', () => {
     expect(c).toBeTruthy();
     expect(c).toMatchInlineSnapshot(`
       Object {
+        "args": undefined,
         "cloudUrl": "file://~",
         "command": "up",
         "commentOnPr": true,
@@ -151,6 +153,7 @@ describe('config.ts', () => {
     expect(c).toBeTruthy();
     expect(c).toMatchInlineSnapshot(`
       Object {
+        "args": undefined,
         "cloudUrl": "file://~",
         "command": "up",
         "commentOnPr": false,

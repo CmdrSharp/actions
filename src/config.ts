@@ -9,6 +9,7 @@ export const command = rt.Union(
   rt.Literal('refresh'),
   rt.Literal('destroy'),
   rt.Literal('preview'),
+  rt.Literal('raw'),
 );
 
 export type Commands = rt.Static<typeof command>;
@@ -32,6 +33,7 @@ export const config = rt
   .Record({
     // Required options
     command: command,
+    args: rt.Array(rt.String),
     stackName: rt.String,
     workDir: rt.String,
     commentOnPr: rt.Boolean,
@@ -57,6 +59,7 @@ export type Config = rt.Static<typeof config>;
 export async function makeConfig(): Promise<Config> {
   return config.check({
     command: getInput('command', { required: true }),
+    args: getInput('args', { required: getInput('command').toLowerCase() == 'raw' ? true : false }),
     stackName: getInput('stack-name', { required: true }),
     workDir: getInput('work-dir') || './',
     secretsProvider: getInput('secrets-provider'),

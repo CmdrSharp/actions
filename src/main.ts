@@ -73,6 +73,12 @@ const main = async () => {
       onOutput(stderr);
       return stdout;
     },
+    raw: async () => {
+      const { stdout, stderr } = await pulumiCli.run(...config.args);
+      onOutput(stdout);
+      onOutput(stderr);
+      return stdout;
+    },
   };
 
   core.debug(`Running action ${config.command}`);

@@ -79608,6 +79608,7 @@ function parseNumber(input) {
 
 
 const command = lib.Union(lib.Literal('up'), lib.Literal('update'), lib.Literal('refresh'), lib.Literal('destroy'), lib.Literal('preview'), lib.Literal('raw'));
+const commandIsRaw = (0,core.getInput)('command').toLowerCase() === 'raw';
 const options = lib.Partial({
     parallel: lib.Number,
     message: lib.String,
@@ -79634,7 +79635,7 @@ const config = lib.Record({
 })
     .And(lib.Partial({
     // Optional options
-    args: lib.Array(lib.String),
+    args: commandIsRaw ? lib.Array(lib.String) : undefined,
     cloudUrl: lib.String,
     configMap: lib.String,
     githubToken: lib.String,
@@ -79646,7 +79647,6 @@ const config = lib.Record({
 function makeConfig() {
     var _a;
     return modules_awaiter(this, void 0, void 0, function* () {
-        const commandIsRaw = (0,core.getInput)('command').toLowerCase() == 'raw' ? true : false;
         return config.check({
             command: (0,core.getInput)('command', { required: true }),
             args: parseArray((0,core.getInput)('args', { required: commandIsRaw })),

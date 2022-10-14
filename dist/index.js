@@ -79977,9 +79977,11 @@ const main = () => modules_awaiter(void 0, void 0, void 0, function* () {
         raw: () => modules_awaiter(void 0, void 0, void 0, function* () {
             // Create/select the stack
             const stackSelectCommand = [
-                'stack select',
+                'stack',
+                'select',
                 config.stackName,
-                `--cwd ${config.workDir}`
+                '--cwd',
+                '${config.workDir}',
             ];
             if (config.upsert) {
                 stackSelectCommand.push('-c');

@@ -76,9 +76,11 @@ const main = async () => {
     raw: async () => {
       // Create/select the stack
       const stackSelectCommand = [
-        'stack select',
+        'stack',
+        'select',
         config.stackName,
-        `--cwd ${config.workDir}`
+        '--cwd',
+        '${config.workDir}',
       ];
 
       if (config.upsert) {

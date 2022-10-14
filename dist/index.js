@@ -79975,6 +79975,17 @@ const main = () => modules_awaiter(void 0, void 0, void 0, function* () {
             return stdout;
         }),
         raw: () => modules_awaiter(void 0, void 0, void 0, function* () {
+            // Create/select the stack
+            const stackSelectCommand = [
+                'stack select',
+                config.stackName,
+                `--cwd ${config.workDir}`
+            ];
+            if (config.upsert) {
+                stackSelectCommand.push('-c');
+            }
+            yield run(...stackSelectCommand);
+            // Run the command with Pulumi CLI
             const { stdout, stderr } = yield run(...config.args);
             onOutput(stdout);
             onOutput(stderr);

@@ -93,7 +93,7 @@ jobs:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ steps.args.outputs.args }}
+          args: "${{ steps.args.outputs.args }}"
           cloud-url: file://~
           upsert: true
           stack-name: dev

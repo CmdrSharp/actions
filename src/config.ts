@@ -33,6 +33,7 @@ export const config = rt
   .Record({
     // Required options
     command: command,
+    args: rt.Array(rt.String).optional(),
     stackName: rt.String,
     workDir: rt.String,
     commentOnPr: rt.Boolean,

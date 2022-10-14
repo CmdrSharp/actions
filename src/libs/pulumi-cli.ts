@@ -13,6 +13,7 @@ export async function isAvailable(): Promise<boolean> {
 }
 
 export async function run(...args: string[]): Promise<exec.ExecResult> {
+  core.info(`Args: ${args}`);
   return exec.exec(`pulumi`, args, true);
 }
 

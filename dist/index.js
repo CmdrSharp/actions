@@ -79625,7 +79625,6 @@ const options = lib.Partial({
 const config = lib.Record({
     // Required options
     command: command,
-    args: lib.Array(lib.String),
     stackName: lib.String,
     workDir: lib.String,
     commentOnPr: lib.Boolean,
@@ -79635,6 +79634,7 @@ const config = lib.Record({
 })
     .And(lib.Partial({
     // Optional options
+    args: lib.Array(lib.String),
     cloudUrl: lib.String,
     configMap: lib.String,
     githubToken: lib.String,
@@ -79646,9 +79646,10 @@ const config = lib.Record({
 function makeConfig() {
     var _a;
     return modules_awaiter(this, void 0, void 0, function* () {
+        const commandIsRaw = (0,core.getInput)('command').toLowerCase() == 'raw' ? true : false;
         return config.check({
             command: (0,core.getInput)('command', { required: true }),
-            args: (0,core.getInput)('args', { required: (0,core.getInput)('command').toLowerCase() == 'raw' ? true : false }),
+            args: parseArray((0,core.getInput)('args', { required: commandIsRaw })),
             stackName: (0,core.getInput)('stack-name', { required: true }),
             workDir: (0,core.getInput)('work-dir') || './',
             secretsProvider: (0,core.getInput)('secrets-provider'),

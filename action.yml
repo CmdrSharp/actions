@@ -9,9 +9,8 @@ inputs:
     description: 'Pulumi command to run, eg. up'
     required: true
   args:
-    description: 'Arguments for Pulumi CLI. Only valid if "command" is "raw". Should be an array of strings to pass to the CLI.'
+    description: 'Arguments for Pulumi CLI. Only valid if "command" is "raw". Can pass multiple arguments, one per line.'
     required: false
-    default: []
   stack-name:
     description: 'Which stack you want to apply to, eg. dev'
     required: true

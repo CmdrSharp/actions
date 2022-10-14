@@ -73,12 +73,12 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ matrix.command }}" == "raw" ]]; then
-            echo "args=up,yes" >> $GITHUB_OUTPUT
+            echo "args=up,--yes" >> $GITHUB_OUTPUT
             exit 0
           fi
 
           if [[ "${{ matrix.command }}" != "preview" ]]; then
-            echo "args=${{ matrix.command }},yes" >> $GITHUB_OUTPUT
+            echo "args=${{ matrix.command }},--yes" >> $GITHUB_OUTPUT
             exit 0
           fi
 

@@ -73,7 +73,7 @@ jobs:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ matrix.command != 'raw' && matrix.command || '' }}
+          args: ${{ matrix.command != 'raw' && matrix.command || 'up' }}
           cloud-url: file://~
           upsert: true
           stack-name: dev
@@ -108,7 +108,7 @@ jobs:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ matrix.command != 'raw' && matrix.command || '' }}
+          args: ${{ matrix.command != 'raw' && matrix.command || 'up' }}
           cloud-url: file://~
           stack-name: dev
           upsert: true
@@ -159,7 +159,7 @@ jobs:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ matrix.command != 'raw' && matrix.command || '' }}
+          args: ${{ matrix.command != 'raw' && matrix.command || 'up' }}
           cloud-url: file://~
           stack-name: dev
           upsert: true
@@ -221,7 +221,7 @@ jobs:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ matrix.command != 'raw' && matrix.command || '' }}
+          args: ${{ matrix.command != 'raw' && matrix.command || 'up' }}
           cloud-url: file://~
           stack-name: dev
           upsert: true

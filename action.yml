@@ -11,7 +11,7 @@ inputs:
   args:
     description: 'Arguments for Pulumi CLI. Only valid if "command" is "raw".'
     required: false
-    default: ''
+    default: []
   stack-name:
     description: 'Which stack you want to apply to, eg. dev'
     required: true

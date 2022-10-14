@@ -74,6 +74,20 @@ const main = async () => {
       return stdout;
     },
     raw: async () => {
+      // Create/select the stack
+      const stackSelectCommand = [
+        'stack select',
+        config.stackName,
+        `--cwd ${config.workDir}`
+      ];
+
+      if (config.upsert) {
+        stackSelectCommand.push('-c');
+      }
+      
+      await pulumiCli.run(...stackSelectCommand);
+
+      // Run the command with Pulumi CLI
       const { stdout, stderr } = await pulumiCli.run(...config.args);
       onOutput(stdout);
       onOutput(stderr);

@@ -12,8 +12,8 @@ export async function isAvailable(): Promise<boolean> {
   return res.stderr != '' && !res.success ? false : res.success;
 }
 
-export async function run(...args: string[]): Promise<void> {
-  await exec.exec(`pulumi`, args, true);
+export async function run(...args: string[]): Promise<exec.ExecResult> {
+  return exec.exec(`pulumi`, args, true);
 }
 
 export function getPlatform(): string | undefined {

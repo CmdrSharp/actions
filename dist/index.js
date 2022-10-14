@@ -79843,6 +79843,7 @@ function isAvailable() {
 }
 function run(...args) {
     return modules_awaiter(this, void 0, void 0, function* () {
+        core.info(`Args: ${args}`);
         return exec_exec(`pulumi`, args, true);
     });
 }

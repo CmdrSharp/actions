@@ -79607,7 +79607,7 @@ function parseNumber(input) {
 
 
 
-const command = lib.Union(lib.Literal('up'), lib.Literal('update'), lib.Literal('refresh'), lib.Literal('destroy'), lib.Literal('preview'));
+const command = lib.Union(lib.Literal('up'), lib.Literal('update'), lib.Literal('refresh'), lib.Literal('destroy'), lib.Literal('preview'), lib.Literal('raw'));
 const options = lib.Partial({
     parallel: lib.Number,
     message: lib.String,
@@ -79625,6 +79625,7 @@ const options = lib.Partial({
 const config = lib.Record({
     // Required options
     command: command,
+    args: lib.Array(lib.String),
     stackName: lib.String,
     workDir: lib.String,
     commentOnPr: lib.Boolean,
@@ -79647,6 +79648,7 @@ function makeConfig() {
     return modules_awaiter(this, void 0, void 0, function* () {
         return config.check({
             command: (0,core.getInput)('command', { required: true }),
+            args: (0,core.getInput)('args', { required: (0,core.getInput)('command').toLowerCase() == 'raw' ? true : false }),
             stackName: (0,core.getInput)('stack-name', { required: true }),
             workDir: (0,core.getInput)('work-dir') || './',
             secretsProvider: (0,core.getInput)('secrets-provider'),
@@ -79840,7 +79842,7 @@ function isAvailable() {
 }
 function run(...args) {
     return modules_awaiter(this, void 0, void 0, function* () {
-        yield exec_exec(`pulumi`, args, true);
+        return exec_exec(`pulumi`, args, true);
     });
 }
 function getPlatform() {
@@ -79966,6 +79968,12 @@ const main = () => modules_awaiter(void 0, void 0, void 0, function* () {
         destroy: () => stack.destroy(Object.assign({ onOutput }, config.options)).then((r) => r.stdout),
         preview: () => modules_awaiter(void 0, void 0, void 0, function* () {
             const { stdout, stderr } = yield stack.preview(config.options);
+            onOutput(stdout);
+            onOutput(stderr);
+            return stdout;
+        }),
+        raw: () => modules_awaiter(void 0, void 0, void 0, function* () {
+            const { stdout, stderr } = yield run(...config.args);
             onOutput(stdout);
             onOutput(stderr);
             return stdout;

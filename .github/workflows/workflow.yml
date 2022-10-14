@@ -72,21 +72,17 @@ jobs:
         id: args
         shell: bash
         run: |
-          echo "args<<EOF" >> $GITHUB_OUTPUT
-
           if [[ "${{ matrix.command }}" == "raw" ]]; then
-            echo "up\n--yes" >> $GITHUB_OUTPUT
-            echo 'EOF' >> $GITHUB_OUTPUT
+            echo "args=up,yes" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          echo "${{ matrix.command }}" >> $GITHUB_OUTPUT
-
           if [[ "${{ matrix.command }}" != "preview" ]]; then
-            echo "\n--yes" >> $GITHUB_OUTPUT
+            echo "args=${{ matrix.command }},yes" >> $GITHUB_OUTPUT
+            exit 0
           fi
 
-          echo 'EOF' >> $GITHUB_OUTPUT
+          echo "args=${{ matrix.command }}" >> $GITHUB_OUTPUT
 
       - uses: ./
         env:

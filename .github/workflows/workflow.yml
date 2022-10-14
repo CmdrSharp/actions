@@ -68,12 +68,24 @@ jobs:
         with:
           dotnet-version: 3.1
 
+      - name: Generate args
+        id: args
+        run: |
+          case "${{ matrix.command }}" in
+            "up") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
+            "refresh") echo "args='refresh\n--yes'" >> $GITHUB_OUTPUT;;
+            "destroy") echo "args='destroy\n--yes'" >> $GITHUB_OUTPUT;;
+            "preview") echo "args=preview" >> $GITHUB_OUTPUT;;
+            "raw") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
+            *) exit 1;;
+          esac
+
       - uses: ./
         env:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ matrix.command != 'raw' && matrix.command || 'up' }}
+          args: ${{ steps.args.outputs.args }}
           cloud-url: file://~
           upsert: true
           stack-name: dev
@@ -103,12 +115,24 @@ jobs:
         with:
           go-version: 1.15.x
 
+      - name: Generate args
+        id: args
+        run: |
+          case "${{ matrix.command }}" in
+            "up") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
+            "refresh") echo "args='refresh\n--yes'" >> $GITHUB_OUTPUT;;
+            "destroy") echo "args='destroy\n--yes'" >> $GITHUB_OUTPUT;;
+            "preview") echo "args=preview" >> $GITHUB_OUTPUT;;
+            "raw") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
+            *) exit 1;;
+          esac
+
       - uses: ./
         env:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ matrix.command != 'raw' && matrix.command || 'up' }}
+          args: ${{ steps.args.outputs.args }}
           cloud-url: file://~
           stack-name: dev
           upsert: true
@@ -154,12 +178,24 @@ jobs:
       - run: npm install
         working-directory: .github/test-stacks/nodejs
 
+      - name: Generate args
+        id: args
+        run: |
+          case "${{ matrix.command }}" in
+            "up") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
+            "refresh") echo "args='refresh\n--yes'" >> $GITHUB_OUTPUT;;
+            "destroy") echo "args='destroy\n--yes'" >> $GITHUB_OUTPUT;;
+            "preview") echo "args=preview" >> $GITHUB_OUTPUT;;
+            "raw") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
+            *) exit 1;;
+          esac
+
       - uses: ./
         env:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ matrix.command != 'raw' && matrix.command || 'up' }}
+          args: ${{ steps.args.outputs.args }}
           cloud-url: file://~
           stack-name: dev
           upsert: true
@@ -216,12 +252,24 @@ jobs:
       - run: pip install -r requirements.txt
         working-directory: .github/test-stacks/python
 
+      - name: Generate args
+        id: args
+        run: |
+          case "${{ matrix.command }}" in
+            "up") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
+            "refresh") echo "args='refresh\n--yes'" >> $GITHUB_OUTPUT;;
+            "destroy") echo "args='destroy\n--yes'" >> $GITHUB_OUTPUT;;
+            "preview") echo "args=preview" >> $GITHUB_OUTPUT;;
+            "raw") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
+            *) exit 1;;
+          esac
+
       - uses: ./
         env:
           PULUMI_CONFIG_PASSPHRASE: not-a-secret
         with:
           command: ${{ matrix.command }}
-          args: ${{ matrix.command != 'raw' && matrix.command || 'up' }}
+          args: ${{ steps.args.outputs.args }}
           cloud-url: file://~
           stack-name: dev
           upsert: true

@@ -13,7 +13,6 @@ export const command = rt.Union(
 );
 
 export type Commands = rt.Static<typeof command>;
-const commandIsRaw: boolean = getInput('command').toLowerCase() === 'raw';
 
 export const options = rt.Partial({
   parallel: rt.Number,
@@ -44,7 +43,6 @@ export const config = rt
   .And(
     rt.Partial({
       // Optional options
-      args: commandIsRaw ? rt.Array(rt.String) : undefined,
       cloudUrl: rt.String,
       configMap: rt.String,
       githubToken: rt.String,
@@ -58,6 +56,8 @@ export const config = rt
 export type Config = rt.Static<typeof config>;
 
 export async function makeConfig(): Promise<Config> {
+  const commandIsRaw: boolean = getInput('command').toLowerCase() === 'raw';
+
   return config.check({
     command: getInput('command', { required: true }),
     args: parseArray(getInput('args', { required: commandIsRaw })),

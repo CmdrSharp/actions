@@ -70,6 +70,7 @@ jobs:
 
       - name: Generate args
         id: args
+        shell: bash
         run: |
           case "${{ matrix.command }}" in
             "up") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
@@ -117,6 +118,7 @@ jobs:
 
       - name: Generate args
         id: args
+        shell: bash
         run: |
           case "${{ matrix.command }}" in
             "up") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
@@ -180,6 +182,7 @@ jobs:
 
       - name: Generate args
         id: args
+        shell: bash
         run: |
           case "${{ matrix.command }}" in
             "up") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;
@@ -254,6 +257,7 @@ jobs:
 
       - name: Generate args
         id: args
+        shell: bash
         run: |
           case "${{ matrix.command }}" in
             "up") echo "args='up\n--yes'" >> $GITHUB_OUTPUT;;

@@ -33,7 +33,7 @@ export const config = rt
   .Record({
     // Required options
     command: command,
-    args: rt.Array(rt.String).optional(), // Optional as empty input would be parsed as undefined
+    args: rt.Array(rt.String).optional(), // Optional as empty string would be parsed as undefined
     stackName: rt.String,
     workDir: rt.String,
     commentOnPr: rt.Boolean,

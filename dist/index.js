@@ -79600,6 +79600,13 @@ function parseBoolean(input) {
 function parseNumber(input) {
     return parseUndefined(input) ? Number(input) : undefined;
 }
+function parseCliArgs(input) {
+    //eslint-disable-next-line
+    const pattern = /((?:"[^"\\]*(?:\\[\S\s][^"\\]*)*"|'[^'\\]*(?:\\[\S\s][^'\\]*)*'|\/[^\/\\]*(?:\\[\S\s][^\/\\]*)*\/[gimy]*(?=\s|$)|(?:\\\s|\S))+)(?=\s|$)/g;
+    return parseUndefined(input)
+        ? Array.from(input.matchAll(pattern), m => m[0])
+        : undefined;
+}
 
 ;// CONCATENATED MODULE: ./src/config.ts
 
@@ -79625,7 +79632,7 @@ const options = lib.Partial({
 const config = lib.Record({
     // Required options
     command: command,
-    args: lib.String,
+    args: lib.Array(lib.String).optional(),
     stackName: lib.String,
     workDir: lib.String,
     commentOnPr: lib.Boolean,
@@ -79649,7 +79656,7 @@ function makeConfig() {
         const commandIsRaw = (0,core.getInput)('command').toLowerCase() === 'raw';
         return config.check({
             command: (0,core.getInput)('command', { required: true }),
-            args: (0,core.getInput)('args', { required: commandIsRaw }),
+            args: parseCliArgs((0,core.getInput)('args', { required: commandIsRaw })),
             stackName: (0,core.getInput)('stack-name', { required: true }),
             workDir: (0,core.getInput)('work-dir') || './',
             secretsProvider: (0,core.getInput)('secrets-provider'),
@@ -79988,7 +79995,7 @@ const main = () => modules_awaiter(void 0, void 0, void 0, function* () {
             }
             yield run(...stackSelectCommand);
             // Run the command with Pulumi CLI
-            const { stdout, stderr } = yield run(config.args);
+            const { stdout, stderr } = yield run(...config.args);
             onOutput(stdout);
             onOutput(stderr);
             return stdout;

@@ -33,7 +33,7 @@ export const config = rt
   .Record({
     // Required options
     command: command,
-    args: rt.Array(rt.String).optional(), // Optional as parseArray evaluates empty strings to undefined
+    args: rt.String,
     stackName: rt.String,
     workDir: rt.String,
     commentOnPr: rt.Boolean,
@@ -61,7 +61,7 @@ export async function makeConfig(): Promise<Config> {
 
   return config.check({
     command: getInput('command', { required: true }),
-    args: parseArray(getInput('args', { required: commandIsRaw })),
+    args: getInput('args', { required: commandIsRaw }),
     stackName: getInput('stack-name', { required: true }),
     workDir: getInput('work-dir') || './',
     secretsProvider: getInput('secrets-provider'),

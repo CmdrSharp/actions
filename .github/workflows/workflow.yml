@@ -59,7 +59,7 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ matrix.command }}" == "raw" ]]; then
-            echo "args=up,--yes,-s dev,--cwd,.github/test-stacks/dotnet,-c '{name: {value: my-pet, secret: false}}'" >> $GITHUB_OUTPUT
+            echo "args=up,--yes,-s dev,--cwd,.github/test-stacks/dotnet,-c,'{name: {value: my-pet, secret: false}}'" >> $GITHUB_OUTPUT
             exit 0
           fi
 

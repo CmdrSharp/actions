@@ -90,7 +90,7 @@ const main = async () => {
       await pulumiCli.run(...stackSelectCommand);
 
       // Run the command with Pulumi CLI
-      const { stdout, stderr } = await pulumiCli.run(config.args);
+      const { stdout, stderr } = await pulumiCli.run(...config.args);
       onOutput(stdout);
       onOutput(stderr);
       return stdout;

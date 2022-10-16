@@ -1,7 +1,7 @@
 import { getInput } from '@actions/core';
 import { context } from '@actions/github';
 import * as rt from 'runtypes';
-import { parseArray, parseBoolean, parseNumber } from './libs/utils';
+import { parseArray, parseBoolean, parseCliArgs, parseNumber } from './libs/utils';
 
 export const command = rt.Union(
   rt.Literal('up'),
@@ -33,7 +33,7 @@ export const config = rt
   .Record({
     // Required options
     command: command,
-    args: rt.String,
+    args: rt.Array(rt.String).optional(), // Optional as empty input would be parsed as undefined
     stackName: rt.String,
     workDir: rt.String,
     commentOnPr: rt.Boolean,
@@ -61,7 +61,7 @@ export async function makeConfig(): Promise<Config> {
 
   return config.check({
     command: getInput('command', { required: true }),
-    args: getInput('args', { required: commandIsRaw }),
+    args: parseCliArgs(getInput('args', { required: commandIsRaw })),
     stackName: getInput('stack-name', { required: true }),
     workDir: getInput('work-dir') || './',
     secretsProvider: getInput('secrets-provider'),

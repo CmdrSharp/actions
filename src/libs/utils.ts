@@ -22,3 +22,12 @@ export function parseBoolean(input: string): boolean | undefined {
 export function parseNumber(input: string): number | undefined {
   return parseUndefined(input) ? Number(input) : undefined;
 }
+
+export function parseCliArgs(input: string): string[] {
+  //eslint-disable-next-line
+  const pattern = /((?:"[^"\\]*(?:\\[\S\s][^"\\]*)*"|'[^'\\]*(?:\\[\S\s][^'\\]*)*'|\/[^\/\\]*(?:\\[\S\s][^\/\\]*)*\/[gimy]*(?=\s|$)|(?:\\\s|\S))+)(?=\s|$)/g
+
+  return parseUndefined(input)
+    ? Array.from(input.matchAll(pattern), m => m[0])
+    : undefined;
+}
